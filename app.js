@@ -310,41 +310,6 @@ botonesDirectorio.forEach(boton => {
     });
 });
 
-// =========================================================================
-// CONTROL DE APERTURA Y CIERRE DEL FORMULARIO MODAL
-// =========================================================================
-
-// Captura de los elementos interactivos del HTML
-const btnAbrirForm = document.getElementById("btnAbrirForm");
-const modalFormulario = document.getElementById("modalFormulario");
-const btnCerrarModal = document.getElementById("btnCerrarModal");
-
-// 1. Abrir el formulario al tocar el botón flotante "＋ Publicar Gratis"
-btnAbrirForm.addEventListener("click", () => {
-    // Le quitamos la clase que lo oculta en el CSS
-    modalFormulario.classList.remove("modal-hidden");
-    // Bloqueamos el scroll del fondo para que sea cómodo en el celular
-    document.body.style.overflow = "hidden"; 
-});
-
-// 2. Función genérica para ocultar y cerrar el formulario
-function cerrarModal() {
-    // Le volvemos a clavar la clase que lo oculta
-    modalFormulario.classList.add("modal-hidden");
-    // Devolvemos el scroll normal a la página
-    document.body.style.overflow = "auto";
-}
-
-// 3. Cerrar al tocar el botón "Cancelar"
-btnCerrarModal.addEventListener("click", cerrarModal);
-
-// 4. Cerrar de forma automática si hacen clic fuera de la caja blanca
-modalFormulario.addEventListener("click", (e) => {
-    if (e.target === modalFormulario) {
-        cerrarModal();
-    }
-});
-
 
 // =========================================================================
 // 10. ARRANQUE OFICIAL DE LA APLICACIÓN
