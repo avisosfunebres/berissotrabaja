@@ -1,0 +1,352 @@
+// =========================================================================
+// 1. IMPORTACIONES Y CONFIGURACIÓN INICIAL DE FIREBASE
+// =========================================================================
+import { initializeApp } from "https://gstatic.com";
+import { getFirestore, collection, addDoc, serverTimestamp, query, where, orderBy, getDocs } from "https://gstatic.com";
+
+// Tu configuración de Firebase (La reemplazaremos con tus claves reales más adelante)
+const firebaseConfig = {
+    apiKey: "TU_API_KEY",
+    authDomain: "TU_://firebaseapp.com",
+    projectId: "TU_PROYECTO",
+    storageBucket: "TU_://appspot.com",
+    messagingSenderId: "TU_SENDER_ID",
+    appId: "TU_APP_ID"
+};
+
+// Inicializar la app y la base de datos
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// Variables de estado interno de la aplicación
+let anunciosBase = [];
+
+// =========================================================================
+// 2. CAPTURA DE ELEMENTOS DEL DOM PARA EL FORMULARIO MODAL
+// =========================================================================
+const btnAbrirForm = document.getElementById("btnAbrirForm");
+const modalFormulario = document.getElementById("modalFormulario");
+const btnCerrarModal = document.getElementById("btnCerrarModal");
+const formPublicar = document.getElementById("formPublicar");
+
+// =========================================================================
+// 3. LÓGICA DE APERTURA DEL MODAL
+// =========================================================================
+btnAbrirForm.addEventListener("click", () => {
+    // Quitamos la clase que lo oculta para que aparezca en pantalla
+    modalFormulario.classList.remove("modal-hidden");
+    
+    // Bloqueamos el scroll del fondo para que la experiencia en celular sea fluida
+    document.body.style.overflow = "hidden"; 
+});
+// =========================================================================
+// 4. LÓGICA DE CIERRE DEL MODAL
+// =========================================================================
+function cerrarModal() {
+    // Agregamos la clase que oculta el modal
+    modalFormulario.classList.add("modal-hidden");
+    
+    // Devolvemos el scroll normal a la pantalla trasera
+    document.body.style.overflow = "auto";
+}
+
+// Cerrar al hacer clic en el botón "Cancelar"
+btnCerrarModal.addEventListener("click", cerrarModal);
+
+// Cerrar automáticamente si el vecino hace clic fuera de la caja blanca del formulario
+modalFormulario.addEventListener("click", (e) => {
+    if (e.target === modalFormulario) {
+        cerrarModal();
+    }
+});
+
+// =========================================================================
+// 5. PROCESAMIENTO Y ENVÍO DEL FORMULARIO DE ALTA (A Firestore)
+// =========================================================================
+formPublicar.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const tipoAnuncio = document.getElementById("selectTipo").value; // "ofrecido", "gastronomia", "oferta"
+    const rubroAnuncio = document.getElementById("selectRubro").value;
+    const zonaAnuncio = document.getElementById("selectZona").value;
+    const textoAnuncio = document.getElementById("textareaTexto").value.trim();
+    let inputCelular = document.getElementById("inputCelular").value.trim();
+    let inputEnlace = document.getElementById("inputEnlace").value.trim();
+
+    // Limpieza estricta del celular (Dejamos solo números para la API de WhatsApp)
+    let celularLimpio = inputCelular.replace(/\D/g, ''); 
+
+    // Auto-corrección de formato para Argentina (549) y código local de Berisso (221)
+    if (celularLimpio.startsWith("54") && !celularLimpio.startsWith("549")) {
+        celularLimpio = celularLimpio.replace("54", "549");
+    }
+    if (celularLimpio.startsWith("221")) {
+        celularLimpio = "549" + celularLimpio;
+    }
+    if (celularLimpio.length === 8 || celularLimpio.length === 10) {
+        if (celularLimpio.startsWith("15")) { celularLimpio = celularLimpio.substring(2); }
+        celularLimpio = "549221" + celularLimpio;
+    }
+
+    // Validación sutil para que el enlace extra de redes tenga el formato correcto
+    if (inputEnlace && !/^https?:\/\//i.test(inputEnlace)) {
+        inputEnlace = "https://" + inputEnlace;
+    }
+
+    // Cálculo automático de las fechas de expiración que definiste
+    const fechaPublicacion = new Date();
+    let fechaExpiracion = new Date();
+
+    if (tipoAnuncio === "oferta") {
+        fechaExpiracion.setDate(fechaPublicacion.getDate() + 14); // 2 semanas comunes para Pymes
+    } else {
+        fechaExpiracion.setDate(fechaPublicacion.getDate() + 30); // 1 mes común para Oficios/Comida
+    }
+
+    // Estructura del anuncio para la base de datos
+    const nuevoAnuncio = {
+        tipo: tipoAnuncio,
+        rubro: rubroAnuncio,
+        zona: zonaAnuncio,
+        texto: textoAnuncio,
+        whatsapp: celularLimpio,
+        enlaceExtra: inputEnlace || "",
+        fechaPublicacion: serverTimestamp(), // Marca de tiempo del servidor de Google
+        fechaExpiracion: fechaExpiracion,
+        destacado: false, // Nace gratis por defecto. Si te pagan los $10.000 semanales lo cambiás a true manual
+        portada: false,   // Nace falso. Si te pagan los $25.000 de la portada principal lo pasás a true manual
+        activo: true
+    };
+
+    try {
+        // Inyección directa en la colección "anuncios" de Cloud Firestore
+        await addDoc(collection(db, "anuncios"), nuevoAnuncio);
+        alert("¡Tu anuncio fue publicado con éxito en Berisso Trabaja!");
+        
+        formPublicar.reset();
+        cerrarModal();
+        
+        // Recargamos la aplicación para refrescar el tablón y que el vecino vea su mensaje al instante
+        window.location.reload(); 
+    } catch (error) {
+        console.error("Error al guardar en Cloud Firestore: ", error);
+        alert("Hubo un error técnico al publicar. Intentá de nuevo.");
+    }
+});
+// =========================================================================
+// 6. CAPTURA DE ELEMENTOS DEL DOM PARA EL BUSCADOR Y EL DIRECTORIO
+// =========================================================================
+const contenedorAnuncios = document.getElementById("contenedorAnuncios");
+const inputBuscador = document.getElementById("inputBuscador");
+const botonesDirectorio = document.querySelectorAll(".dir-tag");
+
+// =========================================================================
+// 7. DESCARGA INICIAL DESDE CLOUD FIRESTORE (Se ejecuta una sola vez al cargar la web)
+// =========================================================================
+async function inicializarPortal() {
+    try {
+        contenedorAnuncios.innerHTML = `<p style="text-align:center; color:#888; padding: 40px 0; font-size:0.95rem;">Conectando con el tablón de Berisso...</p>`;
+        
+        const anunciosRef = collection(db, "anuncios");
+        
+        // REGLA COMERCIAL: Primero los destacados por rubro (true arriba), luego por fecha más nueva
+        // Al mezclar dos ordenamientos distintos, Firebase te pedirá crear un Índice Compuesto (ver consola F12)
+        const q = query(
+            anunciosRef, 
+            where("activo", "==", true), 
+            orderBy("destacado", "desc"), 
+            orderBy("fechaPublicacion", "desc")
+        );
+        
+        const querySnapshot = await getDocs(q);
+        anunciosBase = [];
+        
+        querySnapshot.forEach((doc) => {
+            anunciosBase.push({ id: doc.id, ...doc.data() });
+        });
+
+        // Arrancamos el renderizado con el buscador limpio (Muestra todo)
+        filtrarYRenderizar("");
+    } catch (error) {
+        console.error("Error al conectar con Cloud Firestore:", error);
+        contenedorAnuncios.innerHTML = `<p style="text-align:center; color:red; padding: 40px 0; font-size:0.95rem;">Hubo un error al cargar las publicaciones de la ciudad.</p>`;
+    }
+}
+// =========================================================================
+// 8. MOTOR DE FILTRADO INSTANTÁNEO E INYECCIÓN DE TARJETAS (Cero Burocracia)
+// =========================================================================
+function filtrarYRenderizar(terminoBusqueda) {
+    const busqueda = terminoBusqueda.toLowerCase().trim();
+    contenedorAnuncios.innerHTML = "";
+
+    // A. EL GRAN DESTACADO DE PORTADA (Se muestra SIEMPRE arriba si el buscador está limpio)
+    if (busqueda === "") {
+        const anuncioPortada = anunciosBase.find(anuncio => anuncio.portada === true);
+        if (anuncioPortada) {
+            inyectarTarjeta(anuncioPortada, true);
+        }
+    }
+
+    // B. FILTRADO MULTI-CAMPO (Busca en texto libre, rubros, especialidades y zonas)
+    const filtrados = anunciosBase.filter(anuncio => {
+        const esDePortada = anuncio.portada === true;
+        const coincideTexto = anuncio.texto.toLowerCase().includes(busqueda) || 
+                              anuncio.rubro.toLowerCase().includes(busqueda) ||
+                              anuncio.zona.toLowerCase().includes(busqueda);
+        // Excluimos el de portada general para que no se duplique abajo en la lista
+        return !esDePortada && coincideTexto;
+    });
+
+    // Si el vecino escribe algo específico y no hay coincidencias
+    if (filtrados.length === 0 && busqueda !== "") {
+        contenedorAnuncios.innerHTML = `<p style="text-align:center; color:#888; padding: 60px 0; font-size: 0.95rem;">No encontramos anuncios para tu búsqueda. Intentá con otra palabra del barrio.</p>`;
+        return;
+    }
+
+    // Inyectar los anuncios filtrados comunes o destacados por rubro
+    filtrados.forEach(anuncio => {
+        inyectarTarjeta(anuncio, false);
+    });
+}
+
+// Helper para procesar el HTML limpio con las divisiones cuidadas que armamos en el CSS
+function inyectarTarjeta(anuncio, esPortadaPrincipal) {
+    const item = document.createElement("article");
+    
+    // Asignar clases de CSS según el tipo de monetización y diseño
+    if (esPortadaPrincipal) {
+        item.className = "feed-item card-portada-principal animate-up";
+    } else {
+        item.className = `feed-item animate-up ${anuncio.destacado ? 'premium' : ''}`;
+    }
+    
+    // Enlace nativo directo a la API de WhatsApp
+    const urlWa = `https://wa.me{anuncio.whatsapp}?text=Hola,%20vi%20tu%20anuncio%20en%20el%20portal%20Berisso%20Trabaja%20y%20quería%20hacerte%20una%20consulta.`;
+
+    // Procesamiento inteligente de enlaces de redes sociales (Garantía Vecinal de Confianza)
+    let enlaceExtraHtml = "";
+    if (anuncio.enlaceExtra) {
+        let icono = "🌐"; 
+        let textoEnlace = "Ver Web / Portafolio";
+        const linkLower = anuncio.enlaceExtra.toLowerCase();
+        
+        if (linkLower.includes("instagram.com") || linkLower.includes("ig.me")) { 
+            icono = "📸"; 
+            textoEnlace = "Ver Fotos / Perfil"; 
+        }
+        else if (linkLower.includes("facebook.com") || linkLower.includes("fb.watch")) { 
+            icono = "👥"; 
+            textoEnlace = "Ver Facebook / Perfil"; 
+        }
+        else if (linkLower.includes("youtube.com") || linkLower.includes("youtu.be")) { 
+            icono = "🎵"; 
+            textoEnlace = "Ver Video / Canal"; 
+        }
+        else if (linkLower.includes("github.com")) { 
+            icono = "💻"; 
+            textoEnlace = "Ver Código / GitHub"; 
+        }
+        
+        enlaceExtraHtml = `<a href="${anuncio.enlaceExtra}" target="_blank" class="btn-link link-perfil-social">${icono} ${textoEnlace}</a>`;
+    }
+
+    // Etiquetas sutiles en bloque negro para los destacados pagos
+    let badgeTexto = "";
+    if (esPortadaPrincipal) {
+        badgeTexto = `<span class="badge-featured">Anuncio Principal</span>`;
+    } else if (anuncio.destacado) {
+        badgeTexto = `<span class="badge-featured">Destacado</span>`;
+    }
+
+    item.innerHTML = `
+        <div class="item-main">
+            <p class="item-text">${anuncio.texto}</p>
+        </div>
+        <div class="item-meta">
+            <div class="item-tags-wrapper">
+                ${badgeTexto}
+                <span class="item-tag">${anuncio.rubro}</span>
+                <span class="item-location-tag">📍 ${anuncio.zona}</span>
+            </div>
+            <div class="item-actions">
+                ${enlaceExtraHtml}
+                <a href="${urlWa}" target="_blank" class="btn-link btn-whatsapp">💬 WhatsApp</a>
+            </div>
+        </div>
+    `;
+    contenedorAnuncios.appendChild(item);
+}
+
+// =========================================================================
+// 9. LISTENERS EN TIEMPO REAL (Interacción de la UI)
+// =========================================================================
+// Escuchar lo que escribe el vecino en la barra gigante estilo Google
+inputBuscador.addEventListener("input", () => {
+    // Al tipear libremente, removemos los estados de selección del directorio de botones
+    botonesDirectorio.forEach(b => b.classList.remove("active"));
+    filtrarYRenderizar(inputBuscador.value);
+});
+
+// Controlar los clics en los botones táctiles del directorio inferior
+botonesDirectorio.forEach(boton => {
+    boton.addEventListener("click", (e) => {
+        const yaEstabaActivo = e.target.classList.contains("active");
+        
+        // Limpiar el estado activo de todos los botones
+        botonesDirectorio.forEach(b => b.classList.remove("active"));
+        
+        if (yaEstabaActivo) {
+            // Si hacen clic en una etiqueta que ya estaba filtrada, se limpia el tablón
+            inputBuscador.value = "";
+            filtrarYRenderizar("");
+        } else {
+            // Si seleccionan una nueva, se activa visualmente e inyecta el término en el motor
+            e.target.classList.add("active");
+            const filtro = e.target.getAttribute("data-filter");
+            inputBuscador.value = filtro;
+            filtrarYRenderizar(filtro);
+        }
+    });
+});
+
+// =========================================================================
+// CONTROL DE APERTURA Y CIERRE DEL FORMULARIO MODAL
+// =========================================================================
+
+// Captura de los elementos interactivos del HTML
+const btnAbrirForm = document.getElementById("btnAbrirForm");
+const modalFormulario = document.getElementById("modalFormulario");
+const btnCerrarModal = document.getElementById("btnCerrarModal");
+
+// 1. Abrir el formulario al tocar el botón flotante "＋ Publicar Gratis"
+btnAbrirForm.addEventListener("click", () => {
+    // Le quitamos la clase que lo oculta en el CSS
+    modalFormulario.classList.remove("modal-hidden");
+    // Bloqueamos el scroll del fondo para que sea cómodo en el celular
+    document.body.style.overflow = "hidden"; 
+});
+
+// 2. Función genérica para ocultar y cerrar el formulario
+function cerrarModal() {
+    // Le volvemos a clavar la clase que lo oculta
+    modalFormulario.classList.add("modal-hidden");
+    // Devolvemos el scroll normal a la página
+    document.body.style.overflow = "auto";
+}
+
+// 3. Cerrar al tocar el botón "Cancelar"
+btnCerrarModal.addEventListener("click", cerrarModal);
+
+// 4. Cerrar de forma automática si hacen clic fuera de la caja blanca
+modalFormulario.addEventListener("click", (e) => {
+    if (e.target === modalFormulario) {
+        cerrarModal();
+    }
+});
+
+
+// =========================================================================
+// 10. ARRANQUE OFICIAL DE LA APLICACIÓN
+// =========================================================================
+inicializarPortal();
+

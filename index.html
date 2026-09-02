@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berisso Trabaja — Directorio Comunitario</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- CONTENEDOR CENTRAL ESTILO GOOGLE -->
+    <main class="google-layout">
+        <div class="search-hero">
+            
+            <h1 class="brand-title">berisso<span>trabaja</span></h1>
+            
+            <!-- Barra de Búsqueda Gigante -->
+            <div class="search-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="inputBuscador" placeholder="Ej: plomero, fatays, abogado, uñas, pozo ciego, Los Talas...">
+            </div>
+
+            <!-- DIRECTORIO DE ACCESO RÁPIDO (Botones interactivos para celular) -->
+            <div id="directorioCategorias" class="directory-grid">
+                <!-- Gastronomía y Almacén de Barrio -->
+                <button class="dir-tag" data-filter="Panificación">🍞 Panadería y Facturas</button>
+                <button class="dir-tag" data-filter="Pizzas">🍕 Pizzas y Empanadas</button>
+                <button class="dir-tag" data-filter="Sanguchería">🥪 Sánguches y Picadas</button>
+                <button class="dir-tag" data-filter="Parrilla">🥩 Parrilla y Asado</button>
+                <button class="dir-tag" data-filter="Comida Vegetariana">🥗 Veggie y Sin TACC</button>
+                <button class="dir-tag" data-filter="Pastelería">🧁 Tortas y Candybar</button>
+                <button class="dir-tag" data-filter="Productores de Campo">🍯 Quesos y Miel</button>
+                <button class="dir-tag" data-filter="Cerveza">🍺 Cerveza y Vino</button>
+                
+                <!-- Eventos, Shows y Contenido -->
+                <button class="dir-tag" data-filter="Eventos">🎵 DJs y Sonido</button>
+                <button class="dir-tag" data-filter="Trajes">🎭 Trajes y Disfraces</button>
+                <button class="dir-tag" data-filter="Edición Digital">🎥 Edición YouTubers/Redes</button>
+                <button class="dir-tag" data-filter="Fiestas Infantiles">🎈 Inflables y Animación</button>
+                
+                <!-- Educación, Clases y Ritmos -->
+                <button class="dir-tag" data-filter="Profesores">🎓 Profesores y Apoyo</button>
+                <button class="dir-tag" data-filter="Danza">💃 Danza, Tango y Yoga</button>
+                <button class="dir-tag" data-filter="Autoescuela">🚗 Clases de Manejo</button>
+                
+                <!-- Estética y Cuidado Personal -->
+                <button class="dir-tag" data-filter="Estética">💅 Uñas y Cejas</button>
+                <button class="dir-tag" data-filter="Peluquería">💇 Peluquería y Maquillaje</button>
+                <button class="dir-tag" data-filter="Masajes">💆 Masajistas y Pies</button>
+                <button class="dir-tag" data-filter="Tatuajes">💉 Tatuajes y Piercings</button>
+                
+                <!-- Oficios Pesados, Mantenimiento e Industria -->
+                <button class="dir-tag" data-filter="Albañilería">🧱 Albañiles y Obras</button>
+                <button class="dir-tag" data-filter="Herrería">⚡ Herreros y Soldadura</button>
+                <button class="dir-tag" data-filter="Electricidad">🚰 Luz, Plomería y Gas</button>
+                <button class="dir-tag" data-filter="Carpintería">🪓 Carpintería</button>
+                <button class="dir-tag" data-filter="Mecánica">🏍️ Talleres e Hilos de Bicis</button>
+                <button class="dir-tag" data-filter="Electrodomésticos">❄️ Heladeras y Aires</button>
+                <button class="dir-tag" data-filter="Limpieza de Pozos">🚽 Atmosféricos</button>
+                <button class="dir-tag" data-filter="Control de Plagas">🐜 Fumigadores</button>
+                <button class="dir-tag" data-filter="Parquización">🌱 Cortadores de Pasto</button>
+                <button class="dir-tag" data-filter="Modistas">🧵 Modistas y Costura</button>
+                <button class="dir-tag" data-filter="Zapatería">👞 Zapateros</button>
+                
+                <!-- Profesionales, Cuidado y Logística -->
+                <button class="dir-tag" data-filter="Leyes">⚖️ Abogados y Contadores</button>
+                <button class="dir-tag" data-filter="Salud">🩺 Psicólogos y Dentistas</button>
+                <button class="dir-tag" data-filter="Mascotas">🐾 Paseadores y Pelu Canina</button>
+                <button class="dir-tag" data-filter="Cuidado y Limpieza">🏠 Niñeras y Limpieza</button>
+                <button class="dir-tag" data-filter="Bicicleta">🚲 Delivery Bici</button>
+                <button class="dir-tag" data-filter="Moto">🏍️ Delivery Moto</button>
+                <button class="dir-tag" data-filter="Auto">🚘 Delivery Auto</button>
+                <button class="dir-tag" data-filter="Fletes">🚚 Fletes y Mudanzas</button>
+                <button class="dir-tag" data-filter="Gestores">📋 Gestores de Trámites</button>
+                <button class="dir-tag" data-filter="Otros Oficios">🔧 Otros Oficios</button>
+            </div>
+
+        </div>
+    </main>
+    <!-- TABLÓN DE ANUNCIOS (Divisiones ultra cuidadas en blanco y negro) -->
+    <section class="results-layout">
+        <div id="contenedorAnuncios" class="feed-anuncios">
+            
+            <!-- ANUNCIO DE PORTADA PRINCIPAL (Fijo - El de $25.000 por 5 días) -->
+            <article class="feed-item card-portada-principal animate-up">
+                <div class="item-main">
+                    <p class="item-text"><strong>PINTURERÍA MONTEVIDEO:</strong> Todo para tu obra o renovación del hogar. Descuentos especiales para pintores y albañiles de Berisso. Te llevamos los materiales a la obra sin cargo. Av. Montevideo e/ 14 y 15.</p>
+                </div>
+                <div class="item-meta">
+                    <div class="item-tags-wrapper">
+                        <span class="badge-featured">Anuncio Principal</span>
+                        <span class="item-tag">Pinturería</span>
+                        <span class="item-location-tag">📍 Berisso Centro</span>
+                    </div>
+                    <div class="item-actions">
+                        <a href="https://wa.me" target="_blank" class="btn-link btn-whatsapp">💬 Consultar</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- LOS ANUNCIOS COMUNES DE FIRESTORE SE INYECTAN ACÁ DINÁMICAMENTE CON TU SCRIPT -->
+
+        </div>
+    </section>
+
+    <!-- BOTÓN DE ALTA FIJO (Discreto y accesible en el celular) -->
+    <button id="btnAbrirForm" class="btn-publicar-fijo">＋ Publicar Gratis</button>
+
+    <!-- EL FORMULARIO MODAL COMPLETO CON LAS 41 CATEGORÍAS SIGUE EN LA PARTE 3 -->
+    <!-- FORMULARIO MODAL (Oculto por defecto, se activa al tocar "Publicar Gratis") -->
+    <div id="modalFormulario" class="modal-hidden">
+        <div class="modal-content">
+            <h2>Publicar en Berisso Trabaja</h2>
+            <form id="formPublicar">
+                
+                <label for="selectTipo">Tipo de aviso</label>
+                <select id="selectTipo" required>
+                    <option value="ofrecido">Ofrecer mis servicios / Oficios / Changas (Vence en 1 mes)</option>
+                    <option value="gastronomia">Vender comida casera, repostería o cerveza artesanal (Vence en 1 mes)</option>
+                    <option value="oferta">Buscar un empleado / Pyme (Vence en 2 semanas)</option>
+                </select>
+
+                <label for="selectRubro">Rubro principal</label>
+                <select id="selectRubro" required>
+                    <!-- Bloque Gastronómico, Panificación y Campo -->
+                    <option value="Panificación y Facturas">Panificación (Pan Casero, Trenzas, Roscas) y Facturas (Bolas de Fraile, Donas)</option>
+                    <option value="Pizzas y Empanadas">Pizzas Caseras, Empanadas y Fatays (Empanadas Árabes)</option>
+                    <option value="Comida Casera y Viandas">Minutas / Viandas / Comida Mexicana y Peruana</option>
+                    <option value="Sanguchería y Picadas">Sanguchería (Sánguches de Miga, Milanesa, Hamburguesas) y Picadas</option>
+                    <option value="Parrilla y Carnes">Parrilla y Carnes Cocidas a Domicilio (Asado, Vacío, Lechón, Choripán)</option>
+                    <option value="Comida Vegetariana y Sin TACC">Comida Vegetariana, Vegana y Libre de Gluten / Sin TACC</option>
+                    <option value="Pastelería y Candybar">Pastelería / Trufas / Tartas Dulces y Candybar / Mesas Dulces para Eventos</option>
+                    <option value="Productores de Campo">Quesos de Campo / Salamines / Miel y Mermeladas Caseras</option>
+                    <option value="Cerveza y Vino">Cerveza Artesanal / Vino de la Costa / Bebidas</option>
+                    
+                    <!-- Bloque Profesional, Salud y Educación -->
+                    <option value="Leyes y Finanzas">Abogados, Escribanos y Contadores</option>
+                    <option value="Salud y Terapia">Odontólogos, Psicólogos, Nutricionistas y Veterinarios</option>
+                    <option value="Arquitectura y Diseño">Arquitectos, Diseñadores de Interiores y Asesores de Imagen</option>
+                    <option value="Profesores Particulares">Profesores Particulares y Apoyo Escolar (Matemáticas, Inglés Conversacional, Primaria, Secundaria)</option>
+                    
+                    <!-- Bloque Holístico y Espiritual -->
+                    <option value="Bienestar y Espiritualidad">Bienestar Holístico (Yoga, Meditación, Reiki, Registros Akáshicos, Aromaterapia, Herbolaria, Coaches Espirituales)</option>
+                    <option value="Tarot y Astrología">Tarotistas, Astrólogos, Consejeros y Servicios Religiosos</option>
+                    
+                    <!-- Bloque Estética, Belleza y Arte Corporal -->
+                    <option value="Estética y Belleza">Estética y Belleza (Uñas, Manicuría, Cosmética, Cama Solar, Especialistas en Cejas y Pestañas)</option>
+                    <option value="Peluquería y Peinados">Peluquería, Maquillistas Profesionales, Peinadores y Estilo (Rastas / Trenzas / Baños de Crema)</option>
+                    <option value="Masajes y Podología">Masajistas y Cuidado de los Pies (Podología / Pedicuría)</option>
+                    <option value="Tatuajes y Piercings">Tatuadores y Piercers (Arte Corporal, Perforaciones)</option>
+                    
+                    <!-- Bloque Eventos, Arte, Cultura y Edición Digital -->
+                    <option value="Eventos y Shows">DJs / Música / Sonido y Fotografía / Video para Eventos</option>
+                    <option value="Trajes y Disfraces">Alquiler de Trajes Típicos (Colectividades / Fiestas), Disfraces y Cotillón</option>
+                    <option value="Edición Digital">Edición y Producción de Video para YouTubers, TikTokers y Redes</option>
+                    <option value="Fiestas Infantiles">Inflables / Animación Infantil (Peloteros, Camas Elásticas, Cumpleaños)</option>
+                    <option value="Danza, Ritmos y Teatro">Clases de Danza (Danza Clásica, Tango, Salsa, Bachata), Teatro, Actuación y Canto</option>
+                    <option value="Autoescuela">Academia de Conducción / Autoescuela (Clases de Manejo, Instructor, Licencia)</option>
+                    
+                    <!-- Bloque de Tecnología, Soporte y Seguridad -->
+                    <option value="Desarrollo Web">Desarrollo de Sitios Web / Aplicaciones Web</option>
+                    <option value="Desarrollo Mobile y Escritorio">Desarrollo de Aplicaciones Móviles / Apps de Escritorio</option>
+                    <option value="Soporte Técnico PC">Soporte Técnico de PC, Notebooks y Reparación de Celulares</option>
+                    <option value="Seguridad Electrónica">Cámaras de Seguridad y Alarmas (Instalación, Monitoreo, Mantenimiento)</option>
+                    
+                    <!-- Oficios Técnicos de Hogar, Reparación y Mantenimiento -->
+                    <option value="Electrodomésticos y Aires">Reparación de Heladeras, Lavarropas, Aires Acondicionados y Climatización</option>
+                    <option value="Limpieza de Pozos y Atmosféricos">Atmosféricos (Limpieza de Pozo Ciego / Baños / Desagotes)</option>
+                    <option value="Cerrajeros">Cerrajería de Urgencia (Aperturas 24hs, Cambio de combinaciones, Llaves, Candados)</option>
+                    <option value="Control de Plagas">Fumigadores y Control de Plagas (Desinsectación, Ratas, Cucarachas)</option>
+                    <option value="Carpintería y Tapicería">Carpintería, Muebles a medida y Tapiceros (Restauración de sillones y sillas)</option>
+                    <option value="Auxilio y Gomería">Gomerías de Turno y Auxilio Mecánico / Remolques / Gomería Móvil</option>
+                    <option value="Mecánica de Vehículos">Talleres de Autos y Mecánicos de Motos / Reparación de Bicis</option>
+                    <option value="Albañilería y Obras">Albañiles / Techistas / Pintores y Obras Generales</option>
+                    <option value="Herrería y Soldadura">Herreros y Trabajos de Soldadura (Estructuras, Tinglados, Rejas, Cañistas)</option>
+                    <option value="Electricidad y Plomería">Electricidad / Plomería / Gas Matriculado</option>
+                    <option value="Parquización">Parquización / Cortadores de Pasto / Quintas</option>
+                    
+                    <!-- Servicios Generales, Logística y Transporte Independiente -->
+                    <option value="Delivery en Bicicleta">Delivery Independiente en Bicicleta (Cadetería de cercanía, Envíos rápidos)</option>
+                    <option value="Delivery en Moto">Delivery Independiente en Moto (Cadetes, Repartos para Comercios)</option>
+                    <option value="Delivery en Auto">Delivery y Repartos en Auto / Camioneta (Envíos grandes, Días de lluvia)</option>
+                    <option value="Fletes y Volquetes">Fletes, Mudanzas y Alquiler de Volquetes / Limpieza de Escombros</option>
+                    <option value="Cuidado de Mascotas">Mascotas (Paseadores, Guardería Canina, Peluquería Canina, Duchas)</option>
+                    <option value="Cuidado y Limpieza">Cuidado de Niños y Adultos / Limpieza Doméstica</option>
+                    <option value="Choferes y Fleteros">Choferes / Delivery / Remises y Repartos</option>
+                    <option value="Gestores">Gestores Automotores (Trámites de patentes, Transferencias, Licencia)</option>
+                    <option value="Otros Oficios">Otros Oficios de Barrio</option>
+                </select>
+
+                <label for="selectZona">Barrio de Berisso</label>
+                <select id="selectZona" required>
+                    <option value="Todo Berisso">Llego a todo Berisso / Envío a domicilio</option>
+                    <option value="Berisso Centro">Berisso Centro (Casco Urbano / Montevideo)</option>
+                    <option value="La Franja">La Franja (Villa Progreso, El Carmen, Villa Argüello)</option>
+                    <option value="Villa Zula">Villa Zula / Banco Provincia</option>
+                    <option value="Los Talas">Los Talas / Zona de Quintas</option>
+                </select>
+
+                <label for="textareaTexto">Texto de tu anuncio</label>
+                <textarea id="textareaTexto" placeholder="Ej: Vendo fideos y ravioles caseros para el domingo. Tomo pedidos por WhatsApp hasta el sábado a la noche..." required></textarea>
+
+                <label for="inputCelular">Número de WhatsApp</label>
+                <input type="text" id="inputCelular" placeholder="Ej: 221 555 5555" required>
+                <small>Los vecinos te contactarán directo por este número.</small>
+
+                <label for="inputEnlace">Instagram o Facebook (Opcional)</label>
+                <input type="text" id="inputEnlace" placeholder="Ej: ://instagram.com">
+                <small>Fundamental para que vean fotos de tus trabajos o tu cara y confíen.</small>
+
+                <div class="form-actions">
+                    <button type="button" id="btnCerrarModal">Cancelar</button>
+                    <button type="submit" class="btn-submit">Publicar Ahora</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Script modular conectado a tu Firebase Cloud -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
+

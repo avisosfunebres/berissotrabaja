@@ -1,0 +1,427 @@
+/* Variables de Diseño Minimalista de Última Generación */
+:root {
+    --black: #080808;
+    --gray-dark: #222222;
+    --gray-muted: #666666;
+    --gray-border: #eaeaea; /* Líneas milimétricas e hiperfinas */
+    --gray-bg: #f9f9f9;
+    --font-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Reseteo Global Tipográfico */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-system);
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    background-color: #ffffff;
+    color: var(--black);
+}
+
+/* 1. SECCIÓN BUSCADOR GIGANTE (Inspirado en Google) */
+.google-layout {
+    width: 100%;
+    padding: 60px 20px 0 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.search-hero {
+    width: 100%;
+    max-width: 650px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.brand-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    letter-spacing: -0.06em;
+    margin-bottom: 24px;
+    color: var(--black);
+}
+
+.brand-title span {
+    font-weight: 300;
+    color: var(--gray-muted);
+}
+
+/* El Contenedor de la Barra de Búsqueda Gigante */
+.search-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border: 1px solid #dcdcdc;
+    border-radius: 28px;
+    padding: 14px 22px;
+    background-color: #ffffff;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.search-wrapper:focus-within {
+    border-color: var(--black);
+    box-shadow: 0 1px 6px rgba(32,33,36,0.1);
+}
+
+.search-icon {
+    font-size: 1.1rem;
+    margin-right: 12px;
+    color: var(--gray-muted);
+}
+
+#inputBuscador {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 1.05rem;
+    color: var(--black);
+    font-weight: 400;
+}
+
+#inputBuscador::placeholder {
+    color: var(--gray-muted);
+}
+/* 2. GRILLA DEL DIRECTORIO DE CATEGORÍAS (Etiquetas rápidas) */
+.directory-grid {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+    justify-content: center;
+}
+
+.dir-tag {
+    background-color: var(--gray-bg);
+    border: 1px solid var(--gray-border);
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--gray-dark);
+    cursor: pointer;
+    border-radius: 20px;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.dir-tag:hover {
+    background-color: #eeeeee;
+    border-color: #cccccc;
+}
+
+.dir-tag.active {
+    background-color: var(--black);
+    color: #ffffff;
+    border-color: var(--black);
+}
+
+/* 3. SECCIÓN DE RESULTADOS CON DIVISIONES CUIDADAS */
+.results-layout {
+    width: 100%;
+    max-width: 650px;
+    margin: 40px auto 120px auto;
+    padding: 0 20px;
+}
+
+.feed-anuncios {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Cada mensaje o anuncio separado por una línea milimétrica e hiperfine */
+.feed-item {
+    border-bottom: 1px solid var(--gray-border);
+    padding: 24px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.feed-item:last-child {
+    border-bottom: none;
+}
+
+.item-text {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--black);
+    word-break: break-word;
+}
+
+/* Estructura Meta e Información de la Tarjeta */
+.item-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item-tags-wrapper {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.item-tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--gray-muted);
+    background-color: var(--gray-bg);
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+.item-location-tag {
+    font-size: 0.8rem;
+    color: var(--gray-muted);
+    font-weight: 500;
+}
+
+.item-actions {
+    display: flex;
+    gap: 16px;
+}
+
+.btn-link {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--black);
+    text-decoration: none;
+    transition: opacity 0.15s ease;
+}
+
+.btn-link:hover {
+    opacity: 0.6;
+}
+
+.link-perfil-social {
+    font-weight: 600;
+    color: var(--gray-dark);
+}
+/* 4. ANUNCIOS PREMIUM Y DE PORTADA PRINCIPAL */
+/* La gran tarjeta de portada principal ($25.000 por 5 días) */
+.feed-item.card-portada-principal {
+    background-color: var(--gray-bg);
+    border: 2px solid var(--black) !important; /* Presencia total en la UI */
+    padding: 24px;
+    margin-bottom: 20px;
+}
+
+/* Tarjeta destacada estándar dentro de una categoría específica */
+.feed-item.premium {
+    background-color: #fbfbfb;
+    border-left: 2px solid var(--black) !important;
+    padding-left: 14px;
+}
+
+/* Etiqueta tipográfica en bloque negro para los destacados */
+.badge-featured {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background-color: var(--black);
+    color: #ffffff;
+    padding: 3px 6px;
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* 5. BOTÓN DE ACCIÓN FIJO (Alineado al uso con el pulgar) */
+.btn-publicar-fijo {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background-color: var(--black);
+    color: #ffffff;
+    border: none;
+    padding: 14px 24px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 1500;
+    transition: transform 0.1s ease;
+}
+
+.btn-publicar-fijo:active {
+    transform: scale(0.96);
+}
+
+/* 6. FORMULARIO MODAL (Estética premium sin sombras antiguas) */
+#modalFormulario {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 16px;
+    backdrop-filter: blur(2px); /* Difuminado elegante de fondo */
+}
+
+.modal-hidden {
+    display: none !important;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    border: 1px solid var(--black);
+    border-radius: 0; /* Bordes rectos puros */
+    width: 100%;
+    max-width: 520px;
+    padding: 32px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-content h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+}
+
+#formPublicar label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-top: 16px;
+    margin-bottom: 6px;
+}
+
+#formPublicar select,
+#formPublicar textarea,
+#formPublicar input {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #dddddd;
+    background-color: #ffffff;
+    outline: none;
+}
+
+#formPublicar select:focus,
+#formPublicar textarea:focus,
+#formPublicar input:focus {
+    border-color: var(--black);
+}
+
+#formPublicar textarea {
+    height: 110px;
+    resize: none;
+}
+
+#formPublicar small {
+    display: block;
+    color: var(--gray-muted);
+    font-size: 0.78rem;
+    margin-top: 4px;
+    line-height: 1.4;
+}
+
+.form-actions {
+    margin-top: 28px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.form-actions button {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: none;
+    border: 1px solid var(--black);
+}
+
+.form-actions .btn-submit {
+    background-color: var(--black);
+    color: #ffffff;
+}
+
+/* ANIMACIÓN DE ENTRADA SUAVE */
+.animate-up {
+    animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 7. RESPONSIVE COMPLETO PARA DISPOSITIVOS MÓVILES */
+@media (max-width: 600px) {
+    .google-layout {
+        padding-top: 40px;
+    }
+    .brand-title {
+        font-size: 2.2rem;
+    }
+    
+    /* El directorio de botones se vuelve una cinta deslizable horizontal */
+    .directory-grid {
+        justify-content: flex-start;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 8px;
+        flex-wrap: nowrap;
+        width: 100%;
+        -webkit-overflow-scrolling: touch; /* Deslizamiento suave en iOS */
+    }
+    .dir-tag {
+        flex-shrink: 0; /* Evita que los botones colapsen su ancho */
+    }
+    .feed-item {
+        padding: 20px 0;
+    }
+    .item-text {
+        font-size: 1rem;
+    }
+    .item-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .item-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+    
+    /* El botón se expande en una barra inferior cómoda para celulares */
+    .btn-publicar-fijo {
+        bottom: 20px;
+        right: 20px;
+        left: 20px;
+        text-align: center;
+    }
+    .results-layout {
+        margin-bottom: 140px;
+    }
+    .modal-content {
+        padding: 20px;
+    }
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+    .form-actions button {
+        width: 100%;
+    }
+}
+
