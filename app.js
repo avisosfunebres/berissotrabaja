@@ -179,7 +179,7 @@ function filtrarYRenderizar(terminoBusqueda) {
     const busqueda = terminoBusqueda.toLowerCase().trim();
     contenedorAnuncios.innerHTML = "";
 
-    // A. EL GRAN DESTACADO DE PORTADA (Se muestra SIEMPRE arriba si el buscador está limpio)
+    // A. EL GRAN DESTACADO DE PORTADA (Se muestra ÚNICAMENTE si el buscador y el selector están vacíos)
     if (busqueda === "") {
         const anuncioPortada = anunciosBase.find(anuncio => anuncio.portada === true);
         if (anuncioPortada) {
@@ -187,27 +187,32 @@ function filtrarYRenderizar(terminoBusqueda) {
         }
     }
 
-    // B. FILTRADO MULTI-CAMPO (Busca en texto libre, rubros, especialidades y zonas)
+    // B. FILTRADO MULTI-CAMPO (Busca coincidencias excluyendo el anuncio fijo de la portada)
     const filtrados = anunciosBase.filter(anuncio => {
         const esDePortada = anuncio.portada === true;
         const coincideTexto = anuncio.texto.toLowerCase().includes(busqueda) || 
-                              anuncio.rubro.toLowerCase().includes(busqueda) ||
+                              anuncio.rubro.toLowerCase().includes(busqueda) || 
                               anuncio.zona.toLowerCase().includes(busqueda);
-        // Excluimos el de portada general para que no se duplique abajo en la lista
         return !esDePortada && coincideTexto;
     });
 
-    // Si el vecino escribe algo específico y no hay coincidencias
+    // C. RESPUESTA VISUAL SI EL RUBRO ELEGIDO ESTÁ VACÍO
     if (filtrados.length === 0 && busqueda !== "") {
-        contenedorAnuncios.innerHTML = `<p style="text-align:center; color:#888; padding: 60px 0; font-size: 0.95rem;">No encontramos anuncios para tu búsqueda. Intentá con otra palabra del barrio.</p>`;
+        contenedorAnuncios.innerHTML = `
+            <div style="text-align:center; color:#666666; padding: 60px 20px; font-size: 0.95rem; line-height: 1.6; border: 1px dashed #dddddd; margin-top: 20px;">
+                <p>⚠️ <strong>No hay publicaciones activas en este rubro todavía.</strong></p>
+                <p style="font-size:0.85rem; margin-top: 6px; color:#999999;">¡Sé el primero en aparecer acá arriba! Tocá el botón de abajo y publicá gratis.</p>
+            </div>
+        `;
         return;
     }
 
-    // Inyectar los anuncios filtrados comunes o destacados por rubro
+    // Inyectar los anuncios filtrados comunes o destacados por rubro si existen
     filtrados.forEach(anuncio => {
         inyectarTarjeta(anuncio, false);
     });
 }
+
 
 // Helper para procesar el HTML limpio con las divisiones cuidadas que armamos en el CSS
 function inyectarTarjeta(anuncio, esPortadaPrincipal) {
