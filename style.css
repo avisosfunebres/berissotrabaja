@@ -425,3 +425,43 @@ body {
     }
 }
 
+/* Contenedor del selector del Directorio */
+.directory-select-wrapper {
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+#selectDirectorio {
+    width: 100%;
+    max-width: 650px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--black);
+    background-color: var(--gray-bg);
+    border: 1px solid #dcdcdc;
+    border-radius: 24px; /* Redondeado fino a tono con el buscador */
+    outline: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+#selectDirectorio:focus {
+    border-color: var(--black);
+}
+
+/* Estilo para los títulos de los bloques */
+#selectDirectorio optgroup {
+    font-weight: 700;
+    color: #000000;
+    background-color: #ffffff;
+    padding: 10px;
+}
+
+#selectDirectorio option {
+    font-weight: 400;
+    color: var(--black);
+    padding: 6px;
+}
