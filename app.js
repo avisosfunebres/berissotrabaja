@@ -6,12 +6,13 @@ import { getFirestore, collection, addDoc, serverTimestamp, query, where, orderB
 
 // Tu configuración de Firebase (La reemplazaremos con tus claves reales más adelante)
 const firebaseConfig = {
-    apiKey: "TU_API_KEY",
-    authDomain: "TU_://firebaseapp.com",
-    projectId: "TU_PROYECTO",
-    storageBucket: "TU_://appspot.com",
-    messagingSenderId: "TU_SENDER_ID",
-    appId: "TU_APP_ID"
+  apiKey: "AIzaSyD2sOQFR8zrNlFIiNuo8kix_uT8EKDf2W0",
+  authDomain: "berissotrabaja.firebaseapp.com",
+  projectId: "berissotrabaja",
+  storageBucket: "berissotrabaja.firebasestorage.app",
+  messagingSenderId: "740111918801",
+  appId: "1:740111918801:web:66e5d28d0e05f0e37c47f0"
+
 };
 
 // Inicializar la app y la base de datos
