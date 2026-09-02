@@ -465,3 +465,55 @@ body {
     color: var(--black);
     padding: 6px;
 }
+/* Bloque de Contacto Comercial abajo del Selector */
+.comercial-link-wrapper {
+    margin-top: 24px;
+    margin-bottom: 12px;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.comercial-text {
+    font-size: 0.9rem;
+    color: var(--gray-muted);
+    font-weight: 400;
+}
+
+/* Transformamos el enlace en un botón sutil, limpio y moderno */
+.comercial-link-wrapper a {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--black);
+    text-decoration: none;
+    border: 1px solid var(--black);
+    border-radius: 16px; /* Bordes redondeados sutiles */
+    background-color: #ffffff;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.comercial-link-wrapper a:hover {
+    background-color: var(--black);
+    color: #ffffff;
+    opacity: 1; /* Eliminamos la opacidad vieja */
+}
+
+@media (max-width: 600px) {
+    .comercial-link-wrapper {
+        margin-top: 20px;
+        padding: 0 16px;
+    }
+    .comercial-text {
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+    .comercial-link-wrapper a {
+        width: 100%; /* En el celular se vuelve un botón de ancho completo cómodo para el pulgar */
+        max-width: 320px;
+    }
+}
