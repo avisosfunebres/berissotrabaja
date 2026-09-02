@@ -138,7 +138,7 @@ formPublicar.addEventListener("submit", async (e) => {
 // =========================================================================
 const contenedorAnuncios = document.getElementById("contenedorAnuncios");
 const inputBuscador = document.getElementById("inputBuscador");
-const botonesDirectorio = document.querySelectorAll(".dir-tag");
+const selectDirectorio = document.getElementById("selectDirectorio");
 
 // =========================================================================
 // 7. DESCARGA INICIAL DESDE CLOUD FIRESTORE (Se ejecuta una sola vez al cargar la web)
@@ -278,36 +278,27 @@ function inyectarTarjeta(anuncio, esPortadaPrincipal) {
 }
 
 // =========================================================================
-// 9. LISTENERS EN TIEMPO REAL (Interacción de la UI)
+// 9. LISTENERS EN TIEMPO REAL (Interacción de la Interfaz Limpia)
 // =========================================================================
-// Escuchar lo que escribe el vecino en la barra gigante estilo Google
+
+// Escuchar lo que escribe el vecino libremente en la barra gigante estilo Google
 inputBuscador.addEventListener("input", () => {
-    // Al tipear libremente, removemos los estados de selección del directorio de botones
-    botonesDirectorio.forEach(b => b.classList.remove("active"));
+    // Si el vecino tipea a mano, reseteamos el selector desplegable a la opción inicial
+    selectDirectorio.value = "";
     filtrarYRenderizar(inputBuscador.value);
 });
 
-// Controlar los clics en los botones táctiles del directorio inferior
-botonesDirectorio.forEach(boton => {
-    boton.addEventListener("click", (e) => {
-        const yaEstabaActivo = e.target.classList.contains("active");
-        
-        // Limpiar el estado activo de todos los botones
-        botonesDirectorio.forEach(b => b.classList.remove("active"));
-        
-        if (yaEstabaActivo) {
-            // Si hacen clic en una etiqueta que ya estaba filtrada, se limpia el tablón
-            inputBuscador.value = "";
-            filtrarYRenderizar("");
-        } else {
-            // Si seleccionan una nueva, se activa visualmente e inyecta el término en el motor
-            e.target.classList.add("active");
-            const filtro = e.target.getAttribute("data-filter");
-            inputBuscador.value = filtro;
-            filtrarYRenderizar(filtro);
-        }
-    });
+// ESCUCHADOR NUEVO: Controlar la selección por bloques del menú desplegable
+selectDirectorio.addEventListener("change", (e) => {
+    const valorSeleccionado = e.target.value;
+    
+    // Sincronizamos la barra de búsqueda estilo Google escribiendo el rubro elegido
+    inputBuscador.value = valorSeleccionado;
+    
+    // Disparamos el motor de filtrado de Cloud Firestore al vuelo
+    filtrarYRenderizar(valorSeleccionado);
 });
+
 
 
 // =========================================================================
