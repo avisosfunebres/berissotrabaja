@@ -1,8 +1,8 @@
 // =========================================================================
 // 1. IMPORTACIONES Y CONFIGURACIÓN INICIAL DE FIREBASE
 // =========================================================================
-import { initializeApp } from "https://gstatic.com";
-import { getFirestore, collection, addDoc, serverTimestamp, query, where, orderBy, getDocs } from "https://gstatic.com";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp, query, where, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // Tu configuración de Firebase (La reemplazaremos con tus claves reales más adelante)
 const firebaseConfig = {
@@ -12,7 +12,6 @@ const firebaseConfig = {
   storageBucket: "berissotrabaja.firebasestorage.app",
   messagingSenderId: "740111918801",
   appId: "1:740111918801:web:66e5d28d0e05f0e37c47f0"
-
 };
 
 // Inicializar la app y la base de datos
