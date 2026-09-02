@@ -226,7 +226,7 @@ function inyectarTarjeta(anuncio, esPortadaPrincipal) {
     }
     
     // Enlace nativo directo a la API de WhatsApp
-    const urlWa = `https://wa.me{anuncio.whatsapp}?text=Hola,%20vi%20tu%20anuncio%20en%20el%20portal%20Berisso%20Trabaja%20y%20quería%20hacerte%20una%20consulta.`;
+    const urlWa = `https://wa.me${anuncio.whatsapp}?text=Hola,%20vi%20tu%20anuncio%20en%20el%20portal%20Berisso%20Trabaja%20y%20quería%20hacerte%20una%20consulta.`;
 
     // Procesamiento inteligente de enlaces de redes sociales (Garantía Vecinal de Confianza)
     let enlaceExtraHtml = "";
