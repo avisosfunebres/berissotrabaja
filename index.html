@@ -20,59 +20,84 @@
                 <input type="text" id="inputBuscador" placeholder="Ej: plomero, fatays, abogado, uñas, pozo ciego, Los Talas...">
             </div>
 
-            <!-- DIRECTORIO DE ACCESO RÁPIDO (Botones interactivos para celular) -->
-            <div id="directorioCategorias" class="directory-grid">
-                <!-- Gastronomía y Almacén de Barrio -->
-                <button class="dir-tag" data-filter="Panificación">🍞 Panadería y Facturas</button>
-                <button class="dir-tag" data-filter="Pizzas">🍕 Pizzas y Empanadas</button>
-                <button class="dir-tag" data-filter="Sanguchería">🥪 Sánguches y Picadas</button>
-                <button class="dir-tag" data-filter="Parrilla">🥩 Parrilla y Asado</button>
-                <button class="dir-tag" data-filter="Comida Vegetariana">🥗 Veggie y Sin TACC</button>
-                <button class="dir-tag" data-filter="Pastelería">🧁 Tortas y Candybar</button>
-                <button class="dir-tag" data-filter="Productores de Campo">🍯 Quesos y Miel</button>
-                <button class="dir-tag" data-filter="Cerveza">🍺 Cerveza y Vino</button>
-                
-                <!-- Eventos, Shows y Contenido -->
-                <button class="dir-tag" data-filter="Eventos">🎵 DJs y Sonido</button>
-                <button class="dir-tag" data-filter="Trajes">🎭 Trajes y Disfraces</button>
-                <button class="dir-tag" data-filter="Edición Digital">🎥 Edición YouTubers/Redes</button>
-                <button class="dir-tag" data-filter="Fiestas Infantiles">🎈 Inflables y Animación</button>
-                
-                <!-- Educación, Clases y Ritmos -->
-                <button class="dir-tag" data-filter="Profesores">🎓 Profesores y Apoyo</button>
-                <button class="dir-tag" data-filter="Danza">💃 Danza, Tango y Yoga</button>
-                <button class="dir-tag" data-filter="Autoescuela">🚗 Clases de Manejo</button>
-                
-                <!-- Estética y Cuidado Personal -->
-                <button class="dir-tag" data-filter="Estética">💅 Uñas y Cejas</button>
-                <button class="dir-tag" data-filter="Peluquería">💇 Peluquería y Maquillaje</button>
-                <button class="dir-tag" data-filter="Masajes">💆 Masajistas y Pies</button>
-                <button class="dir-tag" data-filter="Tatuajes">💉 Tatuajes y Piercings</button>
-                
-                <!-- Oficios Pesados, Mantenimiento e Industria -->
-                <button class="dir-tag" data-filter="Albañilería">🧱 Albañiles y Obras</button>
-                <button class="dir-tag" data-filter="Herrería">⚡ Herreros y Soldadura</button>
-                <button class="dir-tag" data-filter="Electricidad">🚰 Luz, Plomería y Gas</button>
-                <button class="dir-tag" data-filter="Carpintería">🪓 Carpintería</button>
-                <button class="dir-tag" data-filter="Mecánica">🏍️ Talleres e Hilos de Bicis</button>
-                <button class="dir-tag" data-filter="Electrodomésticos">❄️ Heladeras y Aires</button>
-                <button class="dir-tag" data-filter="Limpieza de Pozos">🚽 Atmosféricos</button>
-                <button class="dir-tag" data-filter="Control de Plagas">🐜 Fumigadores</button>
-                <button class="dir-tag" data-filter="Parquización">🌱 Cortadores de Pasto</button>
-                <button class="dir-tag" data-filter="Modistas">🧵 Modistas y Costura</button>
-                <button class="dir-tag" data-filter="Zapatería">👞 Zapateros</button>
-                
-                <!-- Profesionales, Cuidado y Logística -->
-                <button class="dir-tag" data-filter="Leyes">⚖️ Abogados y Contadores</button>
-                <button class="dir-tag" data-filter="Salud">🩺 Psicólogos y Dentistas</button>
-                <button class="dir-tag" data-filter="Mascotas">🐾 Paseadores y Pelu Canina</button>
-                <button class="dir-tag" data-filter="Cuidado y Limpieza">🏠 Niñeras y Limpieza</button>
-                <button class="dir-tag" data-filter="Bicicleta">🚲 Delivery Bici</button>
-                <button class="dir-tag" data-filter="Moto">🏍️ Delivery Moto</button>
-                <button class="dir-tag" data-filter="Auto">🚘 Delivery Auto</button>
-                <button class="dir-tag" data-filter="Fletes">🚚 Fletes y Mudanzas</button>
-                <button class="dir-tag" data-filter="Gestores">📋 Gestores de Trámites</button>
-                <button class="dir-tag" data-filter="Otros Oficios">🔧 Otros Oficios</button>
+                        <!-- DIRECTORIO DESPLEGABLE CON SEPARACIÓN POR BLOQUES -->
+            <div class="directory-select-wrapper">
+                <select id="selectDirectorio">
+                    <option value="">🔎 Ver todas las categorías o elegir un rubro...</option>
+                    
+                    <optgroup label="🍕 Gastronomía Vecinal y Campo">
+                        <option value="Panificación y Facturas">🍞 Panadería y Facturas</option>
+                        <option value="Pizzas y Empanadas">🍕 Pizzas, Empanadas y Fatays</option>
+                        <option value="Comida Casera y Viandas">🍲 Minutas y Viandas</option>
+                        <option value="Sanguchería y Picadas">🥪 Sánguches de Miga y Milanesa</option>
+                        <option value="Parrilla y Carnes">🥩 Parrilla y Asado a Domicilio</option>
+                        <option value="Comida Vegetariana y Sin TACC">🥗 Veggie y Sin TACC</option>
+                        <option value="Pastelería y Candybar">🧁 Tortas Dulces y Candybar</option>
+                        <option value="Productores de Campo">🍯 Quesos de Campo y Miel</option>
+                        <option value="Cerveza y Vino">🍺 Cerveza y Vino de la Costa</option>
+                    </optgroup>
+
+                    <optgroup label="💼 Profesionales, Salud y Educación">
+                        <option value="Leyes y Finanzas">⚖️ Abogados, Escribanos y Contadores</option>
+                        <option value="Salud y Terapia">🩺 Psicólogos, Dentistas y Veterinarios</option>
+                        <option value="Arquitectura y Diseño">📐 Arquitectos y Diseñadores de Interiores</option>
+                        <option value="Profesores Particulares">🎓 Profesores y Apoyo Escolar</option>
+                    </optgroup>
+
+                    <optgroup label="✨ Bienestar Holístico y Espiritualidad">
+                        <option value="Bienestar y Espiritualidad">✨ Terapias Holísticas, Reiki y Yoga</option>
+                        <option value="Tarot y Astrología">🔮 Tarotistas y Astrólogos</option>
+                    </optgroup>
+
+                    <optgroup label="💅 Estética, Belleza y Arte Corporal">
+                        <option value="Estética y Belleza">💅 Uñas Esculpidas, Cejas y Pestañas</option>
+                        <option value="Peluquería y Peinados">💇 Peluquerías, Peinados y Maquillaje</option>
+                        <option value="Masajes y Podología">💆 Masajistas y Cuidado de Pies</option>
+                        <option value="Tatuajes y Piercings">💉 Tatuadores y Piercers</option>
+                    </optgroup>
+                    
+                    <optgroup label="🎵 Fiestas, Arte y Medios Digital -->">
+                        <option value="Eventos y Shows">🎵 DJs, Sonido y Fotógrafos</option>
+                        <option value="Trajes y Disfraces">🎭 Trajes Típicos e Inmigrantes</option>
+                        <option value="Edición Digital">🎥 Edición para YouTubers y Redes</option>
+                        <option value="Fiestas Infantiles">🎈 Inflables y Animación</option>
+                        <option value="Danza, Ritmos y Teatro">💃 Clases de Canto, Guitarra y Teatro</option>
+                        <option value="Autoescuela">🚗 Academia de Conducción</option>
+                    </optgroup>
+
+                    <optgroup label="💻 Tecnología y Seguridad">
+                        <option value="Desarrollo Web">🌐 Páginas y Aplicaciones Web</option>
+                        <option value="Desarrollo Mobile y Escritorio">📱 Apps Móviles y Escritorio</option>
+                        <option value="Soporte Técnico PC">💻 Técnico de Computadoras y Celulares</option>
+                        <option value="Seguridad Electrónica">🛡️ Cámaras de Seguridad y Alarmas</option>
+                    </optgroup>
+
+                    <optgroup label="🛠️ Oficios Técnicos e Industrias de Mantenimiento">
+                        <option value="Electrodomésticos y Aires">❄️ Heladeras, Lavarropas y Aires</option>
+                        <option value="Limpieza de Pozos y Atmosféricos">🚽 Atmosféricos y Pozos Ciegos</option>
+                        <option value="Cerrajeros">🔑 Cerrajeros de Urgencia</option>
+                        <option value="Control de Plagas">🐜 Fumigadores y Control de Plagas</option>
+                        <option value="Carpintería y Tapicería">🪓 Carpinteros y Tapiceros</option>
+                        <option value="Auxilio y Gomería">🚘 Gomerías de Turno y Auxilio</option>
+                        <option value="Mecánica de Vehículos">🏍️ Mecánicos de Autos y Motos</option>
+                        <option value="Albañilería y Obras">🧱 Albañiles, Techistas y Pintores</option>
+                        <option value="Herrería y Soldadura">⚡ Herreros y Soldadores Calificados</option>
+                        <option value="Electricidad y Plomería">🚰 Electricistas, Plomeros y Gasistas</option>
+                        <option value="Parquización">🌱 Cortadores de Pasto y Quintas</option>
+                    </optgroup>
+
+                    <optgroup label="🚚 Envíos, Repartos Independientes y Logística">
+                        <option value="Delivery en Bicicleta">🚲 Delivery en Bici (Sin Apps)</option>
+                        <option value="Delivery en Moto">🏍️ Delivery en Moto (Cadetes)</option>
+                        <option value="Delivery en Auto">🚗 Delivery en Auto y Repartos</option>
+                        <option value="Fletes y Volquetes">🚚 Fletes, Mudanzas y Volquetes</option>
+                        <option value="Cuidado de Mascotas">🐾 Paseadores y Peluquería Canina</option>
+                        <option value="Cuidado y Limpieza">🏠 Niñeras y Limpieza Doméstica</option>
+                        <option value="Choferes y Fleteros">🚕 Remises y Choferes Particulares</option>
+                        <option value="Gestores">📋 Gestores de Patentes y Licencias</option>
+                        <option value="Otros Oficios">🔧 Otros Oficios de Barrio</option>
+                    </optgroup>
+                </select>
             </div>
 
         </div>
