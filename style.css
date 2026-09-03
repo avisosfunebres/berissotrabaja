@@ -173,7 +173,7 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.03em;
     color: var(--gray-muted);
-    background-color: var(--gray-bg);
+    background-color: #fff;
     padding: 4px 10px;
     border-radius: 4px;
 }
